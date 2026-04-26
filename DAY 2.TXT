@@ -106,8 +106,40 @@ config t
 
 
 ------------------NEW CLIENT-------------------------------------------------------
+D1, A1, P1: 51
+
+TELUS.COM, 10.0.0.0/8 
+chevronvlan 350 Agents:
+
+@D1
+config t
+ vlan 9
+ name chevronvlan 
+ exit
+ interface vlan 9
+ no shut
+ ip add 10.0.2.1 255.255.254.0 
+ exit
+ ip dhcp excluded-add 10.0.2.1 10.0.2.100
+ ip dhcp pool chevronvlan
+ NETWORK 10.0.2.0 255.255.254.0
+ DEFAULT-ROUTER 10.0.2.1
+ end
 
 
+@A1
+config t
+ int e0/0
+ switchport access vlan 9
+ do sh vlan brief
+
+@P1
+config t
+ int e1/0
+ no shutdown
+ ip address DHCP
+ DO BP
+end
 
 
 
