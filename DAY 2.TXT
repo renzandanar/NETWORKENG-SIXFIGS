@@ -1,0 +1,115 @@
+RealWorldDeployment = 3/4 years experience:
+
+@D1:
+config t
+ vlan 11
+ name 1500wfh
+ exit
+ interface vlan 11
+ no shut
+ ip add 172.16.8.1 255.255.248.0
+ exit
+ ip dhcp excluded-add 172.16.8.1 172.16.8.100
+ ip dhcp pool 1500WFH
+ NETWORK 172.16.8.0 255.255.248.0
+ DEFAULT-ROUTER 172.16.8.1
+ end
+ 
+@A1:
+config t
+ int e0/0
+ switchport access vlan 11
+ do sh vlan brief
+
+@P1:
+config t
+ int e0/0
+ no shutdown
+ ip address DHCP
+ DO BP
+end
+
+--------------------------------------
+
+@D1:
+config t
+ vlan 6
+ name 50wfh
+ exit
+ interface vlan 6
+ no shut
+ ip add 172.16.0.65 255.255.255.192
+ exit
+ ip dhcp excluded-add 172.16.0.65 172.16.0.69
+ ip dhcp pool 50WFH
+ NETWORK 172.16.8.64 255.255.255.192
+ DEFAULT-ROUTER 172.16.0.65
+ end
+
+@A2:
+config t
+ int e1/0
+ switchport access vlan 6
+ do sh vlan brief
+
+@P2:
+config t
+ int e1/0
+ no shutdown
+ ip address DHCP
+ DO BP
+end
+
+----------------------------------------
+
+Task 4: REAL WORLD DESIGN AND IMPLEMENTATION:
+ITSM, NETWORK DESIGN, D1, D2, S2:
+ACCENTURE.COM 10.0.0.0/8 8500 callcenter agents:
+for subnet:
+C: 8500 is 14bits
+S: /32-/14 = /18
+i: 3rd, 64i
+subnet: 10.0.64.0/18
+1st: 10.0.64.1
+Last: 10.0.127.254
+bu: 10.0.127.255
+notYOURS: 10.128.0.0/18
+
+@D1
+config t
+ vlan 14
+ name accenturevlan
+ exit
+ interface vlan 11
+ no shut
+ ip add 10.0.64.1 255.255.192.0
+ exit
+ ip dhcp excluded-add 10.0.64.1 10.0.64.100
+ ip dhcp pool accenturevlan
+ NETWORK 10.0.64.0 255.255.192.0
+ DEFAULT-ROUTER 10.0.64.1
+ end
+
+@D2
+config t
+ int e1/0
+ switchport access vlan 14
+ do sh vlan brief
+end
+
+@S2
+config t
+ int e1/0
+ no shutdown
+ ip address DHCP
+ DO BP
+
+
+------------------NEW CLIENT-------------------------------------------------------
+
+
+
+
+
+
+
