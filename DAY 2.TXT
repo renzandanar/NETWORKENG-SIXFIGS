@@ -141,7 +141,144 @@ config t
  DO BP
 end
 
+------------------------DAY 2 ASSIGNMENT------------------------------------------------
+
+BDO VPN - 25 WFH
+Subnet: 172.16.0.0/16
+VLAN 2
+D1, A1, P1
+ 
+C: 25 = 5b
+S: /32 - 5 = /27
+I: 4th, 32i
+New subnet: 172.16.0.32/27 or 255.255.255.224
+P: 172.16.0.33 /27
+B: 172.16.0.63 /27
+notYOURS: 172.16.0.64 /27
+
+!@D1
+ config t
+ vlan 2
+ name 25WFH
+ exit
+ interface vlan 2
+ no shut
+ ip add 172.16.0.33 255.255.255.224
+ exit
+ ip dhcp excluded-add 172.16.0.33 172.16.0.37
+ ip dhcp pool 25WFH
+ network 172.16.0.33 255.255.255.224
+ default-router 172.16.0.33
+ end
 
 
+!@A1
+ conf t
+  int e0/0
+  no shut
+  switch mode access
+  switch access vlan 2
+  end
+
+!@P1
+ conf t
+  int e0/0
+  no shut
+  ip address DHCP
+  DO BP
+
+---------------------------------------------------------------------------
+
+BPI.COM.PH - 5000 Employee
+Subnet: 10.0.0.0/8
+VLAN 3
+P2, A2, D2
+
+C: 5000 = 13b
+S: /32 - 13 = /19
+I: 3rd, 32i
+New subnet: 10.0.32.0/19 or 255.255.224.0/19
+P: 10.0.32.1/19
+B: 10.0.63.255/19
+notYOURS: 10.0.64.0/19
+
+
+!@D2
+ config t
+ vlan 3
+ name BPI.COM.PH
+ exit
+ interface vlan 3
+ no shut
+ ip add 10.0.32.1 255.255.224.0
+ exit
+ ip dhcp excluded-add 10.0.32.1 10.0.32.100
+ ip dhcp pool BPI.COM.PH
+ network 10.0.32.1 255.255.224.0
+ default-router 10.0.32.1
+ end
+
+!@A2
+ conf t
+  int e1/0
+  no shut
+  switch mode access
+  switch access vlan 3
+  end
+
+!@P2
+ conf t
+  int e1/0
+  no shut
+  ip address DHCP
+  DO BP
+
+---------------------------------------------------------------------------
+
+PS Bank - 6 WFH
+Subnet: 172.16.0.0/16
+VLAN 4
+D2, S2, D1
+
+C: 6 = 3b
+S: /32 - 3 = /29
+I: 4th, 8i
+New subnet: 172.16.0.8 or 255.255.255.248
+P: 172.16.0.9/29
+B: 172.16.0.15/29
+notYOURS: 172.16.0.16/29
+
+
+@D1
+conf t
+ vlan 4
+ name PSBank
+ exit
+ interface vlan 4
+ no shut
+ ip add 172.16.0.9 255.255.255.248
+ exit
+ ip dhcp excluded-add 172.16.0.9 
+ ip dhcp pool PSBank
+ network 172.16.0.9 255.255.255.248
+ DEFAULT-ROUTER 172.16.0.9
+ end
+
+
+@D2
+config t
+ int e1/0
+ switch mode access
+ switchport access vlan 4
+ do sh vlan brief
+end
+
+
+@S2
+config t
+ int e1/0
+ no shutdown
+ ip address DHCP
+ DO BP
 
 
