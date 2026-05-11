@@ -74,11 +74,11 @@ IP access-list Extended NGFW1
  Permit tcp Any host ebet11.com eq 53 log
  Permit tcp Any host ebet11.com eq 443 log
  Permit tcp Any host ebet11.com eq 22 log
- Int Gi 3
+ Int Gi 1
   ip access-group NGFW1 in
 REMOVE FIREWALL:
 CONfig t
- Int Gi 3
+ Int Gi 1
   NO ip access-group NGFW1 in
 end
 
@@ -104,8 +104,8 @@ IP access-list Extended NGFW2
   ip access-group NGFW2 in
 REMOVE FIREWALL:
 CONfig t
- Int Gi 3
-  NO ip access-group NGFW3 in
+ Int Gi 2
+  NO ip access-group NGFW2 in
 end
 
 
