@@ -102,7 +102,11 @@ IP access-list Extended NGFW2
  Permit tcp Any host bet11.com eq 80 log
  Int Gi 2
   ip access-group NGFW2 in
-
+REMOVE FIREWALL:
+CONfig t
+ Int Gi 3
+  NO ip access-group NGFW3 in
+end
 
 
 Game LAB3: make NGFW3
