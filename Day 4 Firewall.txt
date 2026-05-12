@@ -168,7 +168,25 @@ end
 '''
 cli.configurep(cmd2)
 
+---------------------------------------------------
 
+Day 4 Assignment
+
+Create NGFW6
+www.bet10.com - dns, http, https
+www.bet11.com - telnet, ssh
+
+conf t
+no ip access-list Extended NGFW6
+ip access-list Extended NGFW6
+ Permit tcp Any host www.bet10.com eq 53 log
+ Permit tcp Any host www.bet10.com eq 80 log
+ Permit tcp Any host www.bet10.com eq 443 log
+ Permit tcp Any host www.bet11.com eq 23 log
+ Permit tcp Any host www.bet11.com eq 22 log
+ Int e3/3
+  ip access-group NGFW6 in
+end
 
 
 
